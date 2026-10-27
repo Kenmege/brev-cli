@@ -35,6 +35,9 @@ type RefreshStore interface {
 	MkdirAll(string, fs.FileMode) error
 	GetBrevCloudflaredBinaryPath() (string, error)
 	Create(string) (io.WriteCloser, error)
+	Open(string) (io.ReadCloser, error)
+	Remove(string) error
+	Rename(string, string) error
 	DevPlane() *store.DevPlaneClient
 }
 

@@ -366,6 +366,22 @@ func (f FileStore) MkdirAll(path string, mode os.FileMode) error {
 	return nil
 }
 
+func (f FileStore) Open(path string) (io.ReadCloser, error) {
+	file, err := f.fs.Open(path)
+	if err != nil {
+		return nil, breverrors.WrapAndTrace(err)
+	}
+	return file, nil
+}
+
+func (f FileStore) Rename(oldpath, newpath string) error {
+	err := f.fs.Rename(oldpath, newpath)
+	if err != nil {
+		return breverrors.WrapAndTrace(err)
+	}
+	return nil
+}
+
 func getUserHomeDir(f *FileStore) func() (string, error) {
 	return func() (string, error) {
 		if f.User != nil {
